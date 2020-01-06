@@ -15,7 +15,10 @@
             md="4"
           >
             <v-card class="elevation-12">
-              <TicTacToc :numBoard="countBoard" />
+              <TicTacToc
+                :numBoard="countBoard"
+                :symbol="'X'"
+              />
             </v-card>
           </v-col>
         </v-row>
