@@ -1,5 +1,6 @@
 <template>
-  <v-btn 
+  <v-btn
+    class="sizeCell"
     type="button"
     text
     large
@@ -37,3 +38,9 @@ export default {
 }
 
 </script>
+
+<style scoped>
+.sizeCell {
+  width: 100%;
+}
+</style>

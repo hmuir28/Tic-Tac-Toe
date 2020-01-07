@@ -1,9 +1,14 @@
 <template>
   <div class="tic-tac-toc layout">
-    <div v-for="(row, i) in board" class="grid-row" :key="i">
-      <div v-for="(col, j) in row" :key="j">
+    <div v-for="(row, i) in board" 
+      class="gridRow" 
+      :class="paintRowBorder(i)"
+      :key="i">
+      <div v-for="(col, j) in row" 
+        class="gridCell" 
+        :class="paintCellBorder(j)"
+        :key="j">
         <Cell
-          :class="paintBoard(j)"
           :col="j"
           :row="i"
           :symbol="col"
@@ -42,8 +47,24 @@ export default {
       this.$set(this.board, coordenates.x, newRow);
     },
 
-    paintBoard() {
-      // TODO: algorithm to paint borders within board
+    paintRowBorder(coordenateX) {
+      let className = '';
+
+      if (coordenateX !== this.board.length - 1) className = 'borderBottom ';
+
+      return className;
+    },
+
+    paintCellBorder(coordenateY) {
+      let className = '';
+
+      if (coordenateY === 0) {
+        className += 'borderRight';
+      } else if (coordenateY === this.board.length - 1) {
+        className += 'borderLeft';
+      }
+
+      return className;
     }
   },
 
@@ -62,7 +83,19 @@ export default {
 </script>
 
 <style scoped>
-.grid-row {
+.borderBottom {
+  border-bottom: 2px solid;
+}
+.borderRight {
+  border-right: 2px solid;
+}
+.borderLeft {
+  border-left: 2px solid;
+}
+.gridCell {
+  width: 100%;
+}
+.gridRow {
   display: flex;
   justify-content: center;
   width: 100%;

@@ -10,9 +10,9 @@
           justify="center"
         >
           <v-col
-            cols="12"
-            sm="8"
-            md="4"
+            cols="8"
+            sm="4"
+            md="2"
           >
             <v-card class="elevation-12">
               <TicTacToc
