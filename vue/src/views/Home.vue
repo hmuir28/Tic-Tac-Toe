@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 import Modal from '@/components/DynamicControls/Modal';
 import Panel from '@/components/HomeContent/Panel/Panel';
 
@@ -34,15 +36,19 @@ export default {
     return {
       dialog: false,
       fields: [{
-        id: String(Date.now()),
+        name: 'BOARD_SIZE',
         label: 'Board size: ',
         requireMsg: 'board size field is required',
+        tempId: String(Date.now()),
         type: '',
+        value: '',
       }],
     };
   },
 
   methods: {
+    ...mapActions('home', ['SUBMIT_BOARD_SIZE']),
+
     closeDialog(newValue) {
       this.dialog = newValue;
     },
@@ -52,7 +58,8 @@ export default {
     },
 
     save() {
-
+      let field = this.fields.find(field => field.name === 'BOARD_SIZE');
+      this.SUBMIT_BOARD_SIZE(field.value);
     },
   },
 };

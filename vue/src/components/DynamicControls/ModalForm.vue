@@ -8,7 +8,7 @@
         <v-container>
           <v-row v-for="(row, i) in rows" :key="i">
             <v-col v-for="(field, j) in fields" cols="12" sm="6" md="12" :key="j">
-              <v-text-field :label="field.label" required></v-text-field>
+              <v-text-field v-model="field.value" :label="field.label" required></v-text-field>
               <small>{{ field.requireMsg }}</small>
             </v-col>
           </v-row>
