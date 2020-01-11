@@ -38,9 +38,12 @@ export default {
       fields: [{
         name: 'BOARD_SIZE',
         label: 'Board size: ',
+        rules: {
+          required: 'required',
+        },
         requireMsg: 'board size field is required',
         tempId: String(Date.now()),
-        type: '',
+        type: 0,
         value: '',
       }],
     };
