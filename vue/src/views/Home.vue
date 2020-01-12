@@ -34,6 +34,7 @@ export default {
   },
 
   data() {
+    // TODO: Isolate custom fields in another config file
     return {
       dialog: false,
       fields: [{
@@ -46,6 +47,7 @@ export default {
         requireMsg: 'board size field is required',
         tempId: String(Date.now()),
         type: 'Numberfield',
+        value: null,
       }],
     };
   },
@@ -58,8 +60,9 @@ export default {
     },
 
     handlerInput(event) {
-      // eslint-disable-next-line
-      console.log(event.target.id);
+      const controlId = event.target.id || event.target.name;
+      const field = this.fields.find(f => f.id === controlId);
+      field.value = event.target.value;
     },
 
     openModal() {
