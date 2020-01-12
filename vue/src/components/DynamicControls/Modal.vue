@@ -10,6 +10,7 @@
           :title="title"
           :text="text"
           @closeDialog="setDialog"
+          @input="inputEmitter"
         />
       </v-card>
     </v-dialog>
@@ -59,6 +60,10 @@ export default {
   methods: {
     setDialog(newValue) {
       this.$emit('closeDialog', newValue);
+    },
+
+    inputEmitter(value) {
+      this.$emit('input', value);
     },
   },
 }

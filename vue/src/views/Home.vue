@@ -14,6 +14,7 @@
       :save="save"
       :title="'Set Tic Tac Toe board size'"
       @closeDialog="closeDialog"
+      @input="handlerInput"
     />
   </div>
 </template>
@@ -37,14 +38,14 @@ export default {
       dialog: false,
       fields: [{
         name: 'BOARD_SIZE',
+        id: 'boardSize',
         label: 'Board size: ',
-        rules: {
-          required: 'required',
-        },
+        rules: [
+          value => (!isNaN(+value)) ? true : false,
+        ],
         requireMsg: 'board size field is required',
         tempId: String(Date.now()),
-        type: 0,
-        value: '',
+        type: 'Numberfield',
       }],
     };
   },
@@ -54,6 +55,11 @@ export default {
 
     closeDialog(newValue) {
       this.dialog = newValue;
+    },
+
+    handlerInput(event) {
+      // eslint-disable-next-line
+      console.log(event.target.id);
     },
 
     openModal() {

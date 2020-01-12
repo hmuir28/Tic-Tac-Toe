@@ -8,11 +8,13 @@
         <v-container>
           <v-row v-for="(row, i) in rows" :key="i">
             <v-col v-for="(field, j) in fields" cols="12" sm="6" md="12" :key="j">
-              <Input
+              <component
+                :is="field.type"
+                :controlId="field.id"
                 :label="field.label"
-                :requiredMsg="field.requireMsg"
-                :type="field.type"
+                :rules="field.rules"
                 :value="field.value"
+                @input="inputEmitter"
               />
             </v-col>
           </v-row>
@@ -28,13 +30,15 @@
 </template>
 
 <script>
-import Input from '@/components/DynamicControls/Input';
+import Numberfield from '@/components/DynamicControls/Numberfield';
+import Textfield from '@/components/DynamicControls/Textfield';
 
 export default {
   name: 'ModalForm',
 
   components: {
-    Input,
+    Numberfield,
+    Textfield,
   },
 
   props: {
@@ -54,10 +58,6 @@ export default {
     },
     title: {
       default: 'Title',
-      type: String,
-    },
-    requireMsg: {
-      default: '*indicates required field',
       type: String,
     },
     rows: {
@@ -80,6 +80,10 @@ export default {
   methods: {
     closeDialog() {
       this.$emit('closeDialog', !this.dialog);
+    },
+
+    inputEmitter(value) {
+      this.$emit('input', value);
     },
   },
 }
