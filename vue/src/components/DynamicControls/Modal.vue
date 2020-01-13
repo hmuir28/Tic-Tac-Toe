@@ -3,6 +3,7 @@
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <ModalForm
+          :classNames="modalClassNames"
           :dialog="dialog"
           :fields="fields"
           :rows="rows"
@@ -27,7 +28,20 @@ export default {
     ModalForm,
   },
 
+  computed: {
+    modalClassNames() {
+      return {
+        ...this.classNames,
+        modalForm: 'modalForm',
+      }
+    },
+  },
+
   props: {
+    classNames: {
+      default: () => ({}),
+      type: Object,
+    },
     dialog: {
       default: false,
       type: Boolean,
@@ -68,7 +82,3 @@ export default {
   },
 }
 </script>
-
-<style>
-
-</style>

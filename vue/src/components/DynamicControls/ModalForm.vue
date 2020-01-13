@@ -9,8 +9,9 @@
           <v-row v-for="(row, i) in rows" :key="i">
             <v-col v-for="(field, j) in fields" cols="12" sm="6" md="12" :key="j">
               <component
-                :is="field.type"
                 :controlId="field.id"
+                :classNames="classNames"
+                :is="field.type"
                 :label="field.label"
                 :rules="field.rules"
                 :value="field.value"
@@ -44,7 +45,7 @@ export default {
   props: {
     classNames: {
       default: () => ({
-        modalForm: 'modalForm'
+        modalForm: 'modalForm',
       }),
       type: Object,
     },
@@ -89,7 +90,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .modalForm {
   width: 90%;
 }

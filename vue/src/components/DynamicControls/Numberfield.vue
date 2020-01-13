@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div :class="numberField.wrapper">
     <number-input
+      :class="numberField.input"
       :id="controlId"
       :name="controlId"
       :min="min" 
@@ -17,10 +18,29 @@
 export default {
   name: 'Numberfield',
 
+  computed: {
+    numberField() {
+      const classNames = this.classNames.numberField || {
+        wrapper: '',
+        input: '',
+      };
+      return {
+        ...classNames,
+      };
+    }
+  },
+
   props: {
     controlId: {
       required: true,
       type: String,
+    },
+    classNames: {
+      default: () => ({
+        wrapper: '',
+        input: '',
+      }),
+      type: Object,
     },
     label: {
       required: true,
@@ -41,3 +61,13 @@ export default {
   },
 }
 </script>
+<style scoped>
+.numberField .numberInput {
+  width: 100%;
+}
+</style>
+<style>
+.numberField .numberInput .number-input__input {
+  width: 100% !important;
+}
+</style>

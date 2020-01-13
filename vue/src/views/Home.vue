@@ -8,6 +8,8 @@
       :configure="openModal"
     />
     <Modal
+      class="dialog"
+      :classNames="modalClassNames"
       :dialog="dialog"
       :fields="fields"
       :rows="1"
@@ -24,6 +26,7 @@ import { mapActions } from 'vuex';
 
 import Modal from '@/components/DynamicControls/Modal';
 import Panel from '@/components/HomeContent/Panel/Panel';
+import UIControls from '@/utils/UIControls.js';
 
 export default {
   name: 'Home',
@@ -33,27 +36,27 @@ export default {
     Panel,
   },
 
+  computed: {
+    modalClassNames() {
+      return {
+        numberField: {
+          wrapper: 'numberField',
+          input: 'numberInput', 
+        },
+      };
+    },
+  },
+
   data() {
     // TODO: Isolate custom fields in another config file
     return {
       dialog: false,
-      fields: [{
-        name: 'BOARD_SIZE',
-        id: 'boardSize',
-        label: 'Board size: ',
-        rules: [
-          value => (!isNaN(+value)) ? true : false,
-        ],
-        requireMsg: 'board size field is required',
-        tempId: String(Date.now()),
-        type: 'Numberfield',
-        value: null,
-      }],
+      fields: UIControls.home.fields,
     };
   },
 
   methods: {
-    ...mapActions('home', ['SUBMIT_BOARD_SIZE']),
+    ...mapActions('home', ['submitBoardSize']),
 
     closeDialog(newValue) {
       this.dialog = newValue;
@@ -71,7 +74,10 @@ export default {
 
     save() {
       let field = this.fields.find(field => field.name === 'BOARD_SIZE');
-      this.SUBMIT_BOARD_SIZE(field.value);
+      if (field.value) {
+        this.submitBoardSize(field.value);
+        this.$router.push('main');
+      } else alert('Please, enter a number to set the board size.'); // TODO: replace with VeeValidate
     },
   },
 };

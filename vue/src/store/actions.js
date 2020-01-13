@@ -1,1 +1,1 @@
-export const SUBMIT_BOARD_SIZE = `SUBMIT_BOARD_SIZE`;
+export const SUBMIT_BOARD_SIZE = `submitBoardSize`;

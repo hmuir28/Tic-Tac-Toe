@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="textField">
     <v-text-field
       :rules="rules"
       v-model="value"
