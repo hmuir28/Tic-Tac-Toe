@@ -22,8 +22,6 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-
 import Modal from '@/components/DynamicControls/Modal';
 import Panel from '@/components/HomeContent/Panel/Panel';
 import UIControls from '@/utils/UIControls.js';
@@ -56,8 +54,6 @@ export default {
   },
 
   methods: {
-    ...mapActions('home', ['submitBoardSize']),
-
     closeDialog(newValue) {
       this.dialog = newValue;
     },
@@ -73,10 +69,14 @@ export default {
     },
 
     save() {
-      let field = this.fields.find(field => field.name === 'BOARD_SIZE');
+      const field = this.fields.find(field => field.name === 'BOARD_SIZE');
       if (field.value) {
-        this.submitBoardSize(field.value);
-        this.$router.push('main');
+        this.$router.push({
+          name: 'main',
+          params: {
+          boardSize: field.value,
+          },
+        });
       } else alert('Please, enter a number to set the board size.'); // TODO: replace with VeeValidate
     },
   },
@@ -87,5 +87,12 @@ export default {
 .home {
   width: 100%;
   height: 100%;
+}
+</style>
+<style lang="scss">
+.modalForm {
+  .numberField .numberInput .number-input__input {
+    width: 100% !important;
+  }
 }
 </style>

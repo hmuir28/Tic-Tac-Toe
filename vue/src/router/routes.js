@@ -7,7 +7,7 @@ export default [
     name: 'home',
     component: Home,
   }, {
-    path: '/main',
+    path: '/main/:boardSize',
     name: 'main',
     component: Main,
   },

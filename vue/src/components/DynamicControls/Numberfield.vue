@@ -59,15 +59,22 @@ export default {
       type: Array,
     },
   },
+
+  watch: {
+    value(value) {
+      const field = {
+        target: {
+          id: this.controlId,
+          value,
+        },
+      };
+      this.$emit('input', field);
+    },
+  }
 }
 </script>
 <style scoped>
 .numberField .numberInput {
   width: 100%;
-}
-</style>
-<style>
-.numberField .numberInput .number-input__input {
-  width: 100% !important;
 }
 </style>

@@ -9,25 +9,18 @@
           align="center"
           justify="center"
         >
-          <v-col
-            cols="8"
-            sm="4"
-            md="2"
-          >
-            <v-card class="elevation-12">
-              <TicTacToc
-                :numBoard="countBoard"
-                :symbol="'X'"
-              />
-            </v-card>
-          </v-col>
+          <v-card class="elevation-12">
+            <TicTacToc
+              :numBoard="boardSize"
+              :symbol="'X'"
+            />
+          </v-card>
         </v-row>
       </v-container>
     </v-content>
   </v-app>
 </template>
 <script>
-import Constants from '@/utils/Constants.js';
 import TicTacToc from '@/components/TicTacToc/TicTacToc';
 
 export default {
@@ -36,13 +29,10 @@ export default {
   components: { TicTacToc },
 
   props: {
-    source: String,
-  },
-
-  computed: {
-    countBoard() {
-      return Constants.COUNT_BOARD;
-    },
+    boardSize: {
+      require: true,
+      type: Number,
+    }
   },
 }
 </script>

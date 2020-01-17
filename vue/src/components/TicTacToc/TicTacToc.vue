@@ -29,20 +29,22 @@ export default {
 
   data() {
     return {
-      board: [
-        ['', '', ''],
-        ['', '', ''],
-        ['', '', ''],
-      ],
+      board: [],
     };
   },
 
+  mounted() {
+    this.board = [];
+    const cols = Array(this.numBoard).fill('');
+    cols.forEach(() => this.board.push(cols));
+  },
+
   methods: {
-    setSymbol(coordenates) {
+    setSymbol(coordenates, symbol = 'X') {
       // make a copy of the row
       const newRow = this.board[coordenates.x].slice(0);
       // update the value
-      newRow[coordenates.y] = 'X';
+      newRow[coordenates.y] = symbol;
       // update it in the grid
       this.$set(this.board, coordenates.x, newRow);
     },
@@ -60,9 +62,15 @@ export default {
 
       if (coordenateY === 0) {
         className += 'borderRight';
-      } else if (coordenateY === this.board.length - 1) {
-        className += 'borderLeft';
       }
+
+      const totalCell = Math.floor(this.board.length / 2);
+
+      if (totalCell === 1 && (coordenateY === this.board.length - 1)) {
+        className += 'borderLeft';
+      } else if (totalCell > 1 && (coordenateY === this.board.length - 1)) {
+        className += 'borderNone';
+      } else if (totalCell > 1 && !className) className += 'borderRight';
 
       return className;
     }
