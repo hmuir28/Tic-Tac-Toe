@@ -1,5 +1,5 @@
-import { SUBMIT_BOARD_SIZE } from '../actions';
-import { SET_BOARD_SIZE } from '../mutations';
+import { SUBMIT_BOARD_SIZE } from '../actions.type';
+import { SET_BOARD_SIZE } from '../mutations.type';
 
 const actions = {
   [SUBMIT_BOARD_SIZE]: ({ commit }, size) => {
