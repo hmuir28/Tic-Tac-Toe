@@ -1,14 +1,22 @@
-const express = require('express');
-const app = express();
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
+import express from 'express';
+import bodyParser from 'body-parser';
+import http from 'http';
+import io from 'socket.io';
+import setRoutes from "./config/routes";
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-});
+const app = express();
+http.Server(app);
+
+const socketIO = io(http);
+
+const PORT = process.env.PORT || 5000;
+
+app.use(bodyParser.json());
+
+setRoutes(app);
 
 //Whenever someone connects this gets executed
-io.on('connection', (socket) => {
+socketIO.on('connection', (socket) => {
   console.log('A user connected');
 
   //Whenever someone disconnects this piece of code executed
@@ -17,6 +25,6 @@ io.on('connection', (socket) => {
   });
 });
 
-app.listen(8000, () => {
-  console.log('Example app listening on port 8000!')
+app.listen(PORT, () => {
+  console.log('Example app listening on port 5000!')
 });
