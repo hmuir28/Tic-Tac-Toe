@@ -1,1 +1,7 @@
 export const SET_BOARD_SIZE = `SET_BOARD_SIZE`;
+
+export const SET_USER_INFO = `SEND_USER_INFO`;
+
+export const START_LOADING = `START_LOADING`;
+
+export const FINISH_LOADING = `FINISH_LOADING`;
