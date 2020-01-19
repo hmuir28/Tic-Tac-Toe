@@ -1,8 +1,8 @@
-import GameController from '../controllers/GameController';
+import PlayersController from '../controllers/PlayersController';
 
 export default (server) => {
 
   // Game Routes
-  server.post(`/api/game`, GameController.setPlayers)
+  server.post(`/api/players`, PlayersController.setPlayer);
 
 };

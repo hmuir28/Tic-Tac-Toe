@@ -5,7 +5,7 @@
       :id="controlId"
       :label="label"
       :rules="rules"
-      @input="$emit('input', $event)"
+      @input="inputEmitter"
     ></v-text-field>
   </div>
 </template>
@@ -23,6 +23,18 @@ export default {
       return {
         ...classNames,
       };
+    }
+  },
+
+  methods: {
+    inputEmitter(value) {
+      const field = {
+        target: {
+          id: this.controlId,
+          value,
+        },
+      };
+      this.$emit('input', field);
     }
   },
 

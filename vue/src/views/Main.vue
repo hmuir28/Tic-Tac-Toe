@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+import { cloneDeep } from 'lodash';
 import Board from '@/components/Board/Board';
 import Modal from '@/components/DynamicControls/Modal';
 import UIControls from '@/utils/UIControls.js';
@@ -29,6 +31,8 @@ export default {
   },
 
   computed: {
+    ...mapGetters('main', ['getPlayers']),
+
     modalClassNames() {
       return {
         numberField: {
@@ -52,23 +56,42 @@ export default {
   },
 
   methods: {
-    closeDialog: (newValue) => this.dialog = newValue,
+    ...mapActions('main', ['sendUserInfo']),
 
-    handlerInput: (event) => {
+    closeDialog(newValue) {
+      return this.dialog = newValue;
+    },
+
+    handlerInput(event) {
       const controlId = event.target.id || event.target.name;
       const field = this.fields.find(f => f.id === controlId);
       field.value = event.target.value;
     },
 
-    openModal: () => this.dialog = !this.dialog,
-
-    save() {
-      const field = this.fields.find(field => field.name === 'USER_NAME');
+    openModal() {
+      return this.dialog = !this.dialog;
     },
+
+    async save() {
+      const fields = cloneDeep(this.fields);
+      const userInfo = this._setUserInfo(fields);
+      await this.sendUserInfo(userInfo);
+
+      if (this.getPlayers) this.dialog = !this.dialog;
+    },
+
+    _setUserInfo(fields) {
+      return fields.reduce((previous, field) => {
+        const {
+          id,
+          value,
+        } = field;
+
+        if (id && value) previous[id] = { value };
+
+        return previous;
+      }, {});
+    }
   },
 }
 </script>
-
-<style>
-
-</style>

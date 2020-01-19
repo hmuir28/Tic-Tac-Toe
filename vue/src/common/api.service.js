@@ -8,12 +8,9 @@ const ApiService = {
   init() {
     Vue.use(VueAxios, axios);
     Vue.axios.defaults.baseURL = API_URL;
-  },
-
-  setHeader() {
     Vue.axios.defaults.headers.common[
-      "Authorization"
-    ] = `Token ${JwtService.getToken()}`;
+      'Access-Control-Allow-Origin'
+    ] = '*';
   },
 
   query(resource, params) {
@@ -48,3 +45,9 @@ const ApiService = {
 };
 
 export default ApiService;
+
+export const PlayersService = {
+  create(params) {
+    return ApiService.post('players', { player: params });
+  },
+};
