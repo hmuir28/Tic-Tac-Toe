@@ -71,12 +71,17 @@ export default {
     save() {
       const field = this.fields.find(field => field.name === 'BOARD_SIZE');
       if (field.value) {
-        this.$router.push({
-          name: 'main',
-          params: {
-          boardSize: field.value,
-          },
-        });
+        if (field.value < 3) {
+          // TODO: replace alert logic
+          alert('Please, enter a number greater than 2');
+        } else {
+          this.$router.push({
+            name: 'main',
+            params: {
+            boardSize: field.value,
+            },
+          });
+        }
       } else alert('Please, enter a number to set the board size.'); // TODO: replace with VeeValidate
     },
   },

@@ -1,6 +1,10 @@
 <template>
   <div class="main">
-    <Board :boardSize="getBoardSize" />
+    <Spinner :loading="getLoading" />
+    <Board 
+      :boardSize="getBoardSize"
+      v-if="!getLoading"
+    />
     <Modal
       class="dialog"
       :classNames="modalClassNames"
@@ -9,18 +13,20 @@
       :rows="1"
       :save="save"
       :title="'User Information'"
-      @closeDialog="closeDialog"
+      :text="modalButtonText"
+      @closeDialog="back"
       @input="handlerInput"
     />
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 import { cloneDeep } from 'lodash';
 import Board from '@/components/Board/Board';
 import Modal from '@/components/DynamicControls/Modal';
 import UIControls from '@/utils/UIControls.js';
+import Spinner from '@/components/Spinner/Spinner';
 
 export default {
   name: 'Main',
@@ -28,10 +34,12 @@ export default {
   components: {
     Board,
     Modal,
+    Spinner,
   },
 
   computed: {
     ...mapGetters('main', ['getPlayers']),
+    ...mapGetters('loading', ['getLoading']),
 
     modalClassNames() {
       return {
@@ -39,6 +47,13 @@ export default {
           wrapper: 'numberField',
           input: 'numberInput', 
         },
+      };
+    },
+
+    modalButtonText() {
+      return {
+        closeText: 'Back',
+        saveText: 'Save',
       };
     },
 
@@ -57,9 +72,10 @@ export default {
 
   methods: {
     ...mapActions('main', ['sendUserInfo']),
+    ...mapMutations('loading', ['SET_LOADING']),
 
-    closeDialog(newValue) {
-      return this.dialog = newValue;
+    back(newValue) {
+      this.$router.go(-1);
     },
 
     handlerInput(event) {
@@ -77,7 +93,13 @@ export default {
       const userInfo = this._setUserInfo(fields);
       await this.sendUserInfo(userInfo);
 
-      if (this.getPlayers) this.dialog = !this.dialog;
+      if (this.getPlayers) {
+        this.dialog = !this.dialog;
+
+        if (this.getPlayers.length < 2) {
+          this.SET_LOADING(true);
+        }
+      }
     },
 
     _setUserInfo(fields) {

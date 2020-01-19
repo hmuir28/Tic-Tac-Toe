@@ -1,19 +1,17 @@
-import {
-  FINISH_LOADING,
-  START_LOADING,
-} from '../mutations.type';
+import { SET_LOADING } from '../mutations.type';
 
 const state = {
-  loading: 0,
+  loading: false,
 };
 
 const getters = {
-  loading: state => state.loading,
+  getLoading: state => state.loading,
 };
 
 const mutations = {
-  [START_LOADING]: state => state.loading++,
-  [FINISH_LOADING]: state => state.loading--,
+  [SET_LOADING]: (state, loading) => {
+    state.loading = loading;
+  },
 };
 
 export default {
