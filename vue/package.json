@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@chenfengyuan/vue-number-input": "^1.2.0",
-    "axios": "^0.19.1",
+    "axios": "^0.21.1",
     "core-js": "^3.4.4",
     "lodash": "^4.17.15",
     "socket.io": "^2.3.0",
